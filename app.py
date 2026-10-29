@@ -1,19 +1,34 @@
-print("STUDENT PERFORMANCE PREDICTOR")
+import streamlit as st
 
-attendance = float(input("Enter attendance percentage: "))
-study_hours = float(input("Enter study hours per day: "))
-assignment = float(input("Enter assignment mark: "))
-internal = float(input("Enter internal mark: "))
+st.title("🎓 Student Performance Predictor")
+st.write("Enter the student details below")
 
-score = (attendance + assignment + internal) / 3
+attendance = st.number_input(
+    "Attendance (%)", min_value=0, max_value=100
+)
 
-if score >= 85 and study_hours >= 3:
-    performance = "Excellent"
-elif score >= 70:
-    performance = "Good"
-elif score >= 50:
-    performance = "Average"
-else:
-    performance = "Needs Improvement"
+study_hours = st.number_input(
+    "Study Hours per Day", min_value=0.0, max_value=24.0
+)
 
-print("\nPredicted Performance:", performance)
+assignment = st.number_input(
+    "Assignment Mark", min_value=0, max_value=100
+)
+
+internal = st.number_input(
+    "Internal Mark", min_value=0, max_value=100
+)
+
+if st.button("Predict Performance"):
+    score = (attendance + assignment + internal) / 3
+
+    if score >= 85 and study_hours >= 3:
+        result = "Excellent 🌟"
+    elif score >= 70:
+        result = "Good 👍"
+    elif score >= 50:
+        result = "Average 📚"
+    else:
+        result = "Needs Improvement"
+
+    st.success("Predicted Performance: " + result)
